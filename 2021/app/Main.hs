@@ -20,7 +20,7 @@ runDay2 :: String -> IO ()
 runDay2 fileStr = do
   let commands = lines fileStr
       cmds = traverse parseCommand commands
-      init = Pos 0 0
+      init = Pos 0 0 0
       Just finalPos = runMoves init <$> cmds
   print (horiz finalPos * depth finalPos)
 

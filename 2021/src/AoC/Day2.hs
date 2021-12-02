@@ -17,6 +17,7 @@ type Horiz = Int
 data Integral a => Pos a = Pos
                            { horiz :: a
                            , depth :: a
+                           , aim :: a
                            } deriving (Eq, Show)
 
 data Integral a => Command a = Forward a
@@ -30,10 +31,11 @@ move cmd = do
   pos <- get
   let d = depth pos
       h = horiz pos
+      a = aim pos
   case cmd of
-    Forward x -> put (Pos { horiz = h + x, depth = d })
-    Down y -> put (Pos { horiz = h, depth = d + y })
-    Up y -> put (Pos { horiz = h, depth = d - y })
+    Forward x -> put (Pos { horiz = h + x, depth = d + a * x, aim = a })
+    Down y -> put (Pos { horiz = h, depth = d, aim = a + y  })
+    Up y -> put (Pos { horiz = h, depth = d, aim = a - y })
 
 moves :: Integral a => [Command a] -> State (Pos a) ()
 moves [] = StateT (\ pos -> Identity ((), pos))
