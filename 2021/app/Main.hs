@@ -5,7 +5,7 @@ import System.Environment (getArgs)
 
 import AoC.Day1 ( getLargerMeasurements, slidingWindow3Sum )
 import AoC.Day2 ( parseCommand, Pos(..), runMoves )
-import AoC.Day3 ( gammaRate', epsilonRate', gammaRate, epsilonRate )
+import AoC.Day3 ( gammaRate', epsilonRate', gammaRate, epsilonRate, oxygenGenRating, co2scrubberRating )
 
 runDay1 :: String -> IO ()
 runDay1 f =  do
@@ -30,9 +30,11 @@ runDay3 fileStr = do
   let bitStrings = lines fileStr
       er = epsilonRate bitStrings
       gr = gammaRate bitStrings
+      or = oxygenGenRating bitStrings
+      cr = co2scrubberRating bitStrings
   -- print er
   -- print gr
-  print (er * gr)
+  print (or * cr)
   
 main :: IO ()
 main = do

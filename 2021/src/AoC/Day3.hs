@@ -5,6 +5,10 @@ module AoC.Day3
   , epsilonRate'
   , leastCommonBit
   , mostCommonBit
+  , filterStrings
+  , repeatFilter
+  , oxygenGenRating
+  , co2scrubberRating
   )
 where
 
@@ -49,3 +53,39 @@ epsilonRate' = map leastCommonBit . transpose
 
 gammaRate' :: [String] -> String
 gammaRate' = map mostCommonBit . transpose
+
+filterStrings :: Int -> Char -> [String] -> [String]
+filterStrings _   _ []  = []
+filterStrings pos c (x:xs) | (x !! pos) == c = x : filterStrings pos c xs
+                           | otherwise = filterStrings pos c xs
+
+repeatFilter :: Char -> ([String] -> String) -> [String] -> [String]
+repeatFilter keep patF xs =
+  go 0 xs
+  where
+    go i [xs] = [xs]
+    go i xs =
+      let pat = patF xs
+          ys = filterStrings i (pat !! i) xs
+      in
+        if length ys == length xs `div` 2 && even (length xs)
+        then
+          -- keep the ones with 1
+          let ys' = filterStrings i keep xs
+          in
+            go (i+1) ys
+        else
+          go (i+1) ys
+
+
+oxygenGenRating :: [String] -> Int
+oxygenGenRating xs =
+  let pat = gammaRate' xs
+  in
+    binaryStringToInt $ head (repeatFilter '1' gammaRate' xs)
+
+co2scrubberRating :: [String] -> Int
+co2scrubberRating xs =
+  let pat = epsilonRate' xs
+  in
+    binaryStringToInt $ head (repeatFilter '0' epsilonRate' xs)
