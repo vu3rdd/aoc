@@ -5,6 +5,7 @@ import System.Environment (getArgs)
 
 import AoC.Day1 ( getLargerMeasurements, slidingWindow3Sum )
 import AoC.Day2 ( parseCommand, Pos(..), runMoves )
+import AoC.Day3 ( gammaRate', epsilonRate', gammaRate, epsilonRate )
 
 runDay1 :: String -> IO ()
 runDay1 f =  do
@@ -24,8 +25,17 @@ runDay2 fileStr = do
       Just finalPos = runMoves init <$> cmds
   print (horiz finalPos * depth finalPos)
 
+runDay3 :: String -> IO ()
+runDay3 fileStr = do
+  let bitStrings = lines fileStr
+      er = epsilonRate bitStrings
+      gr = gammaRate bitStrings
+  -- print er
+  -- print gr
+  print (er * gr)
+  
 main :: IO ()
 main = do
   (arg:args) <- getArgs
   f <- readFile arg
-  runDay2 f
+  runDay3 f
