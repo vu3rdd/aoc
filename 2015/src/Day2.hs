@@ -40,3 +40,12 @@ paperArea b =
     2*area1 + 2*area2 + 2*area3 + minArea
 
 
+readTestFile :: FilePath -> IO [String]
+readTestFile file = do
+  fileContents <- readFile file
+  return $ lines fileContents
+
+totalPaperArea :: [String] -> Int
+totalPaperArea ls =
+  sum (map (\l -> (paperArea (strToDimension l))) ls)
+
