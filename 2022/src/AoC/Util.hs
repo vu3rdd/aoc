@@ -1,5 +1,6 @@
 module AoC.Util
-( readInputDay1
+  ( readInputDay1
+  , readInputDay2
   )
 where
 
@@ -25,3 +26,9 @@ group c (x:xs) = let (ys, zs) = span (/= c) xs
                      Nothing -> [x:ys]
                      Just (_,bs) -> (x:ys) : group c bs
 
+readInputDay2 :: FilePath -> IO [(String, String)]
+readInputDay2 input = do
+  contents <- readFile input
+  let ls = lines contents
+  let ws = map words ls
+  return $ zip (map (!! 0) ws) (map (!! 1) ws)
