@@ -1,11 +1,11 @@
 module AoC.Day1 where
 
-import AoC.Util (readInput)
+import AoC.Util (readInputDay1)
 import Data.List (sortBy)
 
 calories :: IO [Integer]
 calories = do
-  input <- readInput "day1"
+  input <- readInputDay1 "day1"
   return $ map sum input
 
 maxCalories :: [Integer] -> Integer
